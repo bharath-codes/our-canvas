@@ -6,8 +6,14 @@ const socketIo = require('socket.io');
 
 const app = express();
 const server = http.createServer(app);
-const io = socketIo(server);
+// server.js
 
+const io = socketIo(server, {
+  cors: {
+    origin: "https://our-canvas.onrender.com", // IMPORTANT: Use your actual Render URL here
+    methods: ["GET", "POST"]
+  }
+});
 const PORT = process.env.PORT || 3000;
 
 // Tell Express to serve the 'public' folder
