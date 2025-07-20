@@ -63,3 +63,13 @@ canvas {
 @media (min-width: 640px) {
     .tool-section > label { display: inline-block; }
 }
+/* --- Media Query for Desktop Screens --- */
+@media (min-width: 768px) {
+    canvas {
+        /* On wider screens, we change the aspect ratio to landscape */
+        aspect-ratio: 800 / 600;
+
+        /* And we allow it to be wider */
+        max-width: 800px;
+    }
+}

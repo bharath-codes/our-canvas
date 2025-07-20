@@ -1,5 +1,5 @@
 window.addEventListener('load', () => {
-    const socket = io(); // Connect to the server
+    const socket = io("https://our-canvas.onrender.com"); // Make sure this URL is correct
 
     // Select all elements
     const canvas = document.querySelector('#drawing-canvas');
@@ -73,11 +73,34 @@ window.addEventListener('load', () => {
     function activateEraser() { isErasing = true; eraserBtn.classList.add('selected'); penBtn.classList.remove('selected'); colorTools.classList.add('disabled'); }
     function startDrawing(e) { isDrawing = true; const { x, y } = getCanvasCoordinates(e);[lastX, lastY] = [x, y]; }
     function stopDrawing() { isDrawing = false; ctx.beginPath(); }
+    
+    // THIS IS THE NEW, CORRECTED FUNCTION
     function getCanvasCoordinates(event) {
-        const rect = canvas.getBoundingClientRect();
-        if (event.touches) { return { x: event.touches[0].clientX - rect.left, y: event.touches[0].clientY - rect.top }; }
-        return { x: event.offsetX, y: event.offsetY };
+        const rect = canvas.getBoundingClientRect(); // The size of the canvas on the screen
+    
+        // Calculate the scaling ratio
+        const scaleX = canvas.width / rect.width;
+        const scaleY = canvas.height / rect.height;
+    
+        let clientX, clientY;
+    
+        if (event.touches) {
+            // Use the first touch point for drawing
+            clientX = event.touches[0].clientX;
+            clientY = event.touches[0].clientY;
+        } else {
+            // Use mouse coordinates
+            clientX = event.clientX;
+            clientY = event.clientY;
+        }
+    
+        // Calculate the exact position on the canvas
+        const x = (clientX - rect.left) * scaleX;
+        const y = (clientY - rect.top) * scaleY;
+    
+        return { x, y };
     }
+
     function saveCanvas() { const dataURL = canvas.toDataURL('image/png'); const link = document.createElement('a'); link.href = dataURL; link.download = 'our-canvas.png'; link.click(); }
     
     penBtn.addEventListener('click', activatePen);
