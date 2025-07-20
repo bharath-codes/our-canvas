@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Canvas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="header">
+        <h1>Our Canvas</h1>
+        <p>A place for us to create together</p>
+    </div>
+
+    <div class="toolbar">
+        <div class="tool-section" id="mode-tools">
+            <button id="pen-btn" class="tool-button selected" title="Pen"><i class="fa-solid fa-pen"></i></button>
+            <button id="eraser-btn" class="tool-button" title="Eraser"><i class="fa-solid fa-eraser"></i></button>
+        </div>
+
+        <div class="tool-section" id="color-tools">
+            <div class="color-palette">
+                <div class="color-swatch" data-color="#000000"></div>
+                <div class="color-swatch" data-color="#e74c3c"></div>
+                <div class="color-swatch" data-color="#3498db"></div>
+                <div class="color-swatch" data-color="#2ecc71"></div>
+                <div class="color-swatch" data-color="#f1c40f"></div>
+                <input type="color" id="color-picker" title="More colors">
+            </div>
+        </div>
+        <div class="tool-section" id="brush-tools">
+            <label for="brush-size">Size</label>
+            <input type="range" id="brush-size" min="1" max="100" value="10">
+            <span id="brush-size-display">10</span>
+        </div>
+        <div class="tool-section" id="action-tools">
+            <button id="clear-btn" class="tool-button" title="Clear Canvas"><i class="fa-solid fa-trash-can"></i></button>
+            <button id="save-btn" class="tool-button" title="Save Drawing"><i class="fa-solid fa-download"></i></button>
+        </div>
+    </div>
+
+    <canvas id="drawing-canvas" width="600" height="800"></canvas>
+    
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+/* --- Global Styles --- */
+body {
+    font-family: 'Poppins', sans-serif;
+    /* Warm, creamy beige background */
+    background-color: #f5f5dc; 
+    background-image: linear-gradient(to bottom, #f5f5dc, #e8e4d4);
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    padding: 15px;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+/* --- Header --- */
+.header { text-align: center; margin-bottom: 15px; }
+.header h1 { margin: 0; font-weight: 600; }
+.header p { margin: 0; font-weight: 400; opacity: 0.7; }
+
+/* --- Toolbar --- */
+.toolbar {
+    background-color: #ffffff; border-radius: 12px; padding: 10px; margin-bottom: 15px;
+    display: flex; flex-wrap: wrap; justify-content: center; align-items: center;
+    gap: 15px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); width: 100%;
+    max-width: 600px; box-sizing: border-box;
+}
+.tool-section { display: flex; align-items: center; gap: 10px; padding: 5px 10px; }
+.tool-section > label { font-weight: 600; font-size: 0.9em; display: none; }
+#mode-tools { gap: 8px; }
+
+/* --- Color Tools --- */
+.color-palette { display: flex; align-items: center; gap: 8px; }
+.color-swatch {
+    width: 28px; height: 28px; border-radius: 50%; cursor: pointer;
+    border: 3px solid transparent; transition: transform 0.15s ease, border-color 0.15s ease;
+}
+.color-swatch:hover { transform: scale(1.1); }
+#color-tools.disabled { opacity: 0.5; pointer-events: none; }
+#color-picker { width: 32px; height: 32px; padding: 0; border: none; background: none; cursor: pointer; }
+#color-picker::-webkit-color-swatch { border-radius: 50%; border: 2px solid #ddd; }
+
+/* --- Other Tools --- */
+#brush-size { cursor: pointer; width: 100px; }
+#brush-size-display { font-size: 0.9em; background-color: #f0f0f0; padding: 3px 8px; border-radius: 5px; min-width: 20px; text-align: center; }
+#action-tools { gap: 10px; }
+.tool-button {
+    background-color: #f4f4f4; border: 1px solid #ddd; border-radius: 8px;
+    width: 40px; height: 40px; cursor: pointer; color: #555; font-size: 1.1em;
+    display: flex; align-items: center; justify-content: center; transition: background-color 0.2s;
+}
+.tool-button:hover { background-color: #e9e9e9; }
+.tool-button.selected { background-color: #dbeafe; color: #2563eb; border-color: #93c5fd; }
+
+/* --- Canvas --- */
+canvas {
+    background-color: white; border-radius: 12px; cursor: crosshair;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); width: 100%;
+    max-width: 600px; height: auto; aspect-ratio: 600 / 800;
+}
+
+@media (min-width: 640px) {
+    .tool-section > label { display: inline-block; }
+}
