@@ -1,4 +1,4 @@
-// server.js (New Version)
+// server.js (Corrected Version)
 
 const express = require('express');
 const http = require('http');
@@ -8,7 +8,7 @@ const app = express();
 const server = http.createServer(app);
 const io = socketIo(server, {
   cors: {
-    origin: "*", // Allow all origins for simplicity, can be locked down to your render URL
+    origin: "*", // Using wildcard for simplicity. Can be your Render URL.
     methods: ["GET", "POST"]
   }
 });
@@ -18,53 +18,45 @@ app.use(express.static('public'));
 
 let users = {}; // Object to store user data { socket.id: { name: '...' } }
 
+// This is the main connection block
 io.on('connection', (socket) => {
     console.log('A new user has connected:', socket.id);
 
-    // 1. When a new user provides their name
+    // When a new user provides their name
     socket.on('userConnected', (name) => {
         users[socket.id] = { name: name || 'Anonymous' };
-        // Tell EVERYONE (including the new user) the full list of users
         io.emit('updateUsers', users);
     });
 
-    // 2. When a user moves their cursor
+    // When a user moves their cursor
     socket.on('cursorMove', (data) => {
-        // Broadcast to everyone ELSE
         socket.broadcast.emit('cursorMoved', { id: socket.id, x: data.x, y: data.y });
     });
 
-    // 3. When a drawing event happens
+    // When a drawing event happens
     socket.on('drawing', (data) => {
         socket.broadcast.emit('drawing', data);
     });
 
-    // 4. When a clear event happens
+    // When a clear event happens
     socket.on('clear', () => {
         socket.broadcast.emit('clear');
     });
 
-        socket.on('clear', () => {
-        socket.broadcast.emit('clear');
-    });
-
-    // NEW: When a chat message event happens
+    // When a chat message event happens
     socket.on('chatMessage', (msg) => {
-        // Get the sender's name
         const senderName = users[socket.id] ? users[socket.id].name : 'Anonymous';
-        // Broadcast the message and the sender's name to everyone else
         socket.broadcast.emit('chatMessage', { name: senderName, message: msg });
     });
 
-    socket.on('disconnect', () => {
-
-    // 5. When a user disconnects
+    // When a user disconnects
     socket.on('disconnect', () => {
         console.log('User disconnected:', socket.id);
         delete users[socket.id];
-        // Tell everyone that this user has left
         io.emit('userDisconnected', socket.id);
     });
-});
 
+}); // <-- THIS WAS LIKELY THE MISSING '}' BRACE
+
+// This line starts the server
 server.listen(PORT, () => console.log(`Server is running on http://localhost:${PORT}`));
