@@ -117,3 +117,85 @@ canvas {
     font-weight: 600;
     white-space: nowrap; /* Prevents name from wrapping */
 }
+
+/* --- NEW: Chat Box Styles --- */
+
+#chat-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 300px;
+    height: 400px;
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 12px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(0,0,0,0.1);
+}
+
+#chat-messages {
+    list-style-type: none;
+    margin: 0;
+    padding: 15px;
+    overflow-y: auto;
+    flex-grow: 1; /* Makes the message list take up available space */
+}
+
+#chat-messages li {
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+    word-wrap: break-word;
+}
+
+#chat-messages li strong {
+    color: #3498db;
+}
+
+/* Special style for your own messages */
+#chat-messages li.my-message strong {
+    color: #e74c3c;
+}
+
+#chat-form {
+    display: flex;
+    padding: 10px;
+    border-top: 1px solid #eee;
+    background-color: rgba(240, 240, 240, 0.5);
+}
+
+#chat-input {
+    border: 1px solid #ddd;
+    padding: 10px;
+    flex-grow: 1;
+    border-radius: 20px;
+    margin-right: 10px;
+}
+
+#chat-form button {
+    background: #3498db;
+    border: none;
+    padding: 0 15px;
+    color: white;
+    border-radius: 50%;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+}
+
+#chat-form button:hover {
+    background: #2980b9;
+}
+
+/* Make chat smaller on mobile */
+@media (max-width: 768px) {
+    #chat-container {
+        width: auto;
+        left: 10px;
+        right: 10px;
+        bottom: 10px;
+        height: 250px;
+    }
+}

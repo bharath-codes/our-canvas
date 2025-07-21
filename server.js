@@ -44,7 +44,19 @@ io.on('connection', (socket) => {
         socket.broadcast.emit('clear');
     });
 
-    
+        socket.on('clear', () => {
+        socket.broadcast.emit('clear');
+    });
+
+    // NEW: When a chat message event happens
+    socket.on('chatMessage', (msg) => {
+        // Get the sender's name
+        const senderName = users[socket.id] ? users[socket.id].name : 'Anonymous';
+        // Broadcast the message and the sender's name to everyone else
+        socket.broadcast.emit('chatMessage', { name: senderName, message: msg });
+    });
+
+    socket.on('disconnect', () => {
 
     // 5. When a user disconnects
     socket.on('disconnect', () => {
