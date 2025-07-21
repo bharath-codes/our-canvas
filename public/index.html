@@ -8,7 +8,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
-    
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -22,7 +21,6 @@
             <button id="pen-btn" class="tool-button selected" title="Pen"><i class="fa-solid fa-pen"></i></button>
             <button id="eraser-btn" class="tool-button" title="Eraser"><i class="fa-solid fa-eraser"></i></button>
         </div>
-
         <div class="tool-section" id="color-tools">
             <div class="color-palette">
                 <div class="color-swatch" data-color="#000000"></div>
@@ -38,29 +36,26 @@
             <input type="range" id="brush-size" min="1" max="100" value="10">
             <span id="brush-size-display">10</span>
         </div>
-            </div> <!-- This closes the brush-tools section -->
-
-    <!-- NEW: Doodle/Stamp Tool Section -->
-    <div class="tool-section" id="doodle-tools">
-        <button class="tool-button doodle-btn" data-doodle="❤️" title="Heart"></button>
-        <button class="tool-button doodle-btn" data-doodle="⭐" title="Star"></button>
-        <button class="tool-button doodle-btn" data-doodle="😊" title="Smile"></button>
-        <button class="tool-button doodle-btn" data-doodle="⚡" title="Bolt"></button>
-    </div>
-
-    <div class="tool-section" id="action-tools">
         <div class="tool-section" id="action-tools">
             <button id="clear-btn" class="tool-button" title="Clear Canvas"><i class="fa-solid fa-trash-can"></i></button>
             <button id="save-btn" class="tool-button" title="Save Drawing"><i class="fa-solid fa-download"></i></button>
         </div>
     </div>
 
-    <!-- THIS IS THE CORRECTED SECTION -->
     <div id="canvas-container">
         <canvas id="drawing-canvas" width="600" height="800"></canvas>
         <div id="cursors-container"></div>
     </div>
-    
+
+    <div id="chat-container">
+        <ul id="chat-messages"></ul>
+        <form id="chat-form">
+            <input id="chat-input" autocomplete="off" placeholder="Say something..." />
+            <button type="submit" title="Send"><i class="fa-solid fa-paper-plane"></i></button>
+        </form>
+    </div>
+
+    <!-- SCRIPTS ARE HERE AT THE VERY END -->
     <script src="/socket.io/socket.io.js"></script>
     <script src="script.js"></script>
 </body>
