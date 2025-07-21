@@ -44,6 +44,18 @@ io.on('connection', (socket) => {
         socket.broadcast.emit('clear');
     });
 
+        // 4. When a clear event happens
+    socket.on('clear', () => {
+        socket.broadcast.emit('clear');
+    });
+
+    // NEW: When a doodle event happens
+    socket.on('doodle', (data) => {
+        socket.broadcast.emit('doodle', data);
+    });
+
+    // 5. When a user disconnects
+
     // 5. When a user disconnects
     socket.on('disconnect', () => {
         console.log('User disconnected:', socket.id);
