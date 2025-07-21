@@ -73,3 +73,47 @@ canvas {
         max-width: 800px;
     }
 }
+
+/* --- NEW: Canvas & Cursor Container Styles --- */
+
+/* This container holds everything and allows absolute positioning */
+#canvas-container {
+    position: relative;
+    /* Match the canvas styling so it looks the same */
+    width: 100%;
+    max-width: 600px;
+}
+
+/* The container for all incoming cursor elements */
+#cursors-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* VERY IMPORTANT: Allows clicks to go through to the canvas */
+    overflow: hidden; /* Prevents cursors from appearing outside the canvas */
+}
+
+/* The style for an individual user's cursor */
+.user-cursor {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #fff;
+    transition: top 0.05s linear, left 0.05s linear; /* Smooths out the movement */
+}
+
+.user-cursor .cursor-icon {
+    font-size: 20px;
+}
+
+.user-cursor .cursor-name {
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap; /* Prevents name from wrapping */
+}
