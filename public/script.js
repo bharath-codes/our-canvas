@@ -1,7 +1,6 @@
 window.addEventListener('load', () => {
     // --- SETUP ---
     const socket = io("https://our-canvas.onrender.com"); // Your Render URL
-
     const canvasContainer = document.querySelector('#canvas-container');
     const cursorsContainer = document.querySelector('#cursors-container');
     const userCursors = {};
@@ -25,38 +24,11 @@ window.addEventListener('load', () => {
     const brushSizeDisplay = document.querySelector('#brush-size-display');
     const clearBtn = document.querySelector('#clear-btn');
     const saveBtn = document.querySelector('#save-btn');
-    
-    const chatForm = document.querySelector('#chat-form');
-    const chatInput = document.querySelector('#chat-input');
-    const chatMessages = document.querySelector('#chat-messages');
 
     // --- STATE VARIABLES ---
     let isDrawing = false, isErasing = false, lastX = 0, lastY = 0;
     let currentColor = '#000000', currentBrushSize = brushSizeSlider.value;
     
-    // --- CHAT LOGIC ---
-    function addMessageToUI(sender, message, isMe = false) {
-        const item = document.createElement('li');
-        item.innerHTML = `<strong>${sender}:</strong> ${message}`;
-        if (isMe) { item.classList.add('my-message'); }
-        chatMessages.appendChild(item);
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-    }
-
-    chatForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        if (chatInput.value) {
-            const msg = chatInput.value;
-            addMessageToUI(userName || "Me", msg, true);
-            socket.emit('chatMessage', msg);
-            chatInput.value = '';
-        }
-    });
-
-    socket.on('chatMessage', (data) => {
-        addMessageToUI(data.name, data.message);
-    });
-
     // --- CORE DRAWING FUNCTIONS ---
     function draw(x0, y0, x1, y1, color, size, op) { ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x1, y1); ctx.strokeStyle = color; ctx.lineWidth = size; ctx.lineCap = 'round'; ctx.lineJoin = 'round'; ctx.globalCompositeOperation = op; ctx.stroke(); }
     function handleMouseMove(e) { if (!isDrawing) return; e.preventDefault(); const { x, y } = getCanvasCoordinates(e); const localOp = isErasing ? 'destination-out' : 'source-over'; draw(lastX, lastY, x, y, currentColor, currentBrushSize, localOp); const w = canvas.width; const h = canvas.height; const data = { x0: lastX / w, y0: lastY / h, x1: x / w, y1: y / h, color: currentColor, size: currentBrushSize, op: localOp }; socket.emit('drawing', data);[lastX, lastY] = [x, y]; }
@@ -84,13 +56,7 @@ window.addEventListener('load', () => {
     eraserBtn.addEventListener('click', activateEraser);
     colorSwatches.forEach(swatch => { swatch.style.backgroundColor = swatch.dataset.color; swatch.addEventListener('click', () => { currentColor = swatch.dataset.color; activatePen(); }); });
     colorPicker.addEventListener('input', (e) => { currentColor = e.target.value; activatePen(); });
-    
-    // THIS IS THE CORRECTED LINE
-    brushSizeSlider.addEventListener('input', (e) => {
-        currentBrushSize = e.target.value;
-        brushSizeDisplay.textContent = e.target.value;
-    });
-
+    brushSizeSlider.addEventListener('input', (e) => { currentBrushSize = e.target.value; brushSizeDisplay.textContent = e.target.value; });
     clearBtn.addEventListener('click', handleClearClick);
     saveBtn.addEventListener('click', saveCanvas);
     canvas.addEventListener('mousedown', startDrawing);
