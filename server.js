@@ -34,8 +34,18 @@ io.on('connection', (socket) => {
         socket.broadcast.emit('drawing', data);
     });
 
-    socket.on('clear', () => {
+       socket.on('clear', () => {
         socket.broadcast.emit('clear');
+    });
+
+    // NEW: When an undo event happens
+    socket.on('undo', () => {
+        socket.broadcast.emit('undo');
+    });
+
+    // NEW: When a redo event happens
+    socket.on('redo', () => {
+        socket.broadcast.emit('redo');
     });
 
     socket.on('disconnect', () => {
